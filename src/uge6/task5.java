@@ -1,4 +1,4 @@
-package lektion1;
+package uge6;
 
 import java.util.ArrayList;
 import java.util.HashMap;
