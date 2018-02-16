@@ -39,7 +39,7 @@ Best case is the target element being element 1, giving `O(1)`.
 
 # Exercise 4
 2.3-5
-
+    
 ```
 getIndex(A,v):
     index = A.length / 2
@@ -81,7 +81,7 @@ And again, the last level:
 2.3-2 
 
 ```
-// We are assuming all arrays start at index 1
+// We are assuming all arrays start at index 0
 
 merge(A,p,q,r):
     n1 = q - p + 1
@@ -97,9 +97,11 @@ merge(A,p,q,r):
         if L.length = i:
             A[k] = R[j]
             j++
+            continue
         if R.length = j:
             A[k] = L[i]
             i++
+            continue
         if L[i] <= R[j]:
             A[k] = L[i]
             i++
@@ -121,7 +123,7 @@ Inversions:
 
 ## b
 The array in reverse order.  
-It has ((n+1)n)/2 inversions. 
+It has ((n-1)n)/2 inversions. 
 
 ## c
 It's the exact same, as insertion sort has to do one action for each inversion. 
