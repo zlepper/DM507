@@ -1,7 +1,6 @@
 package utilities;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 
 /**
@@ -28,10 +27,15 @@ public class Benchmark<T> {
      */
     private final Function<T[], Void> executeable;
 
-    public Benchmark(String name, Function<Integer, T[]> prepare, Function<T[], Void> executeable) {
+    private final BiFunction<Long, Integer, Double> calculateTime;
+
+    public Benchmark(String name, Function<Integer, T[]> prepare, Function<T[], Void> executeable, BiFunction<Long, Integer, Double> calculateTime) {
         this.name = name;
         this.prepare = prepare;
         this.executeable = executeable;
+        this.calculateTime = calculateTime;
+
+        this.getAverageTime(100_000, 3);
     }
 
     /**
@@ -68,7 +72,8 @@ public class Benchmark<T> {
         for (int i = 0; i < times.length; i++) {
             long time = times[i];
             int valueCount = values[i];
-            System.out.printf("%10d : %11d\n", valueCount, time);
+            double t = calculateTime.apply(time, valueCount);
+            System.out.printf("%10d : %11d : %6.3e\n", valueCount, time, t);
         }
 
     }
@@ -146,8 +151,6 @@ public class Benchmark<T> {
         System.gc();
         long before = System.nanoTime();
         executeable.apply(data);
-        // Run gc again to ensure we clean any created objects
-        // And that the time spend on that is included in the benchmark
         long after = System.nanoTime();
         return after - before;
     }
