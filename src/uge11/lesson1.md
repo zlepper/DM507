@@ -8,9 +8,9 @@ c is invalid when going to 912, as this is larger than previous 911
 
 # Exercise 3
 ```kotlin
-fun treeSuccessor(x) {
+fun treePredecessor(x) {
     if(x.left != null) {
-        return treeMinimum(x.left)
+        return treeMaximum(x.left)
     }
     y = x.p
     while(y != null && x == y.left) {
